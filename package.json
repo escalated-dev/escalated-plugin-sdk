@@ -1,0 +1,30 @@
+{
+  "name": "@escalated-dev/plugin-sdk",
+  "version": "0.1.0",
+  "description": "SDK for building Escalated plugins — framework-agnostic, TypeScript-first",
+  "type": "module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    },
+    "./types": {
+      "types": "./build/types.d.ts",
+      "default": "./build/types.js"
+    }
+  },
+  "files": ["build/"],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["escalated", "plugin", "sdk", "helpdesk"],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}
