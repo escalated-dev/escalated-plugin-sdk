@@ -24,4 +24,4 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-      - run: npx tsx --test tests/**/*.test.ts
+      - run: npx tsx --test $(find tests -name '*.test.ts')
