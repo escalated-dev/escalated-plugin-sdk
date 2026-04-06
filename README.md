@@ -3,8 +3,9 @@
 [![Tests](https://github.com/escalated-dev/escalated-plugin-sdk/actions/workflows/run-tests.yml/badge.svg)](https://github.com/escalated-dev/escalated-plugin-sdk/actions/workflows/run-tests.yml)
 [![Node.js](https://img.shields.io/badge/node.js-20+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-SDK for building Escalated plugins. Write plugins once in TypeScript, run them across all Escalated backend frameworks (Laravel, Django, AdonisJS, Rails).
+SDK for building [Escalated](https://escalated.dev) plugins. Write plugins once in TypeScript, run them across all Escalated backend frameworks (Laravel, Django, AdonisJS, Rails).
 
 ## Quick Start
 
@@ -160,7 +161,17 @@ definePlugin({
 
 See the [Escalated Docs](https://github.com/escalated-dev/escalated-docs) for the full plugin development guide.
 
+## Related Packages
+
+- **[Plugin Runtime](https://github.com/escalated-dev/escalated-plugin-runtime)** — Runtime host that loads and executes plugins
+- **[Escalated](https://github.com/escalated-dev/escalated)** — Shared frontend (Vue 3 + Inertia.js)
+- **[Escalated Docs](https://github.com/escalated-dev/escalated-docs)** — Full documentation
+
 ## Requirements
 
 - Node.js >= 18
 - TypeScript >= 5.4
+
+## License
+
+MIT
