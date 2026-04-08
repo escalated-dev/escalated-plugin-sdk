@@ -157,6 +157,30 @@ definePlugin({
 })
 ```
 
+## Broadcastable Events
+
+Plugins can listen to real-time broadcasting events in addition to standard action hooks. When the host framework has broadcasting enabled (Pusher, Reverb, ActionCable, Django Channels, Mercure, Phoenix PubSub, SSE, etc.), the following events are forwarded to plugins:
+
+| Event | Description |
+|---|---|
+| `broadcast.ticket.updated` | Ticket data changed and was broadcast to connected clients |
+| `broadcast.ticket.replied` | A new reply was broadcast on a ticket channel |
+| `broadcast.ticket.assigned` | Agent assignment was broadcast |
+| `broadcast.ticket.status_changed` | Status transition was broadcast |
+| `broadcast.presence.updated` | Ticket presence (who is viewing) was broadcast |
+| `broadcast.notification.sent` | A real-time notification was pushed to a user |
+
+Subscribe to these in your plugin's `actions` block just like any other hook:
+
+```typescript
+actions: {
+  'broadcast.ticket.replied': async (event, ctx) => {
+    // React to a reply that was just broadcast in real time
+    ctx.log.info('Broadcast reply on ticket', event.ticketId)
+  },
+},
+```
+
 ## Documentation
 
 See the [Escalated Docs](https://github.com/escalated-dev/escalated-docs) for the full plugin development guide.
