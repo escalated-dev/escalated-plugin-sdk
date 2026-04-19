@@ -20,9 +20,10 @@
   ],
   "scripts": {
     "build": "tsc",
-    "test": "node --test tests/**/*.test.ts",
+    "test": "npx tsx --test tests/**/*.test.ts",
     "lint": "eslint . --max-warnings 0",
     "format:check": "prettier --check src/",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
