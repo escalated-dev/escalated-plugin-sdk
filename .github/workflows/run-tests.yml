@@ -25,3 +25,17 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npx tsx --test $(find tests -name '*.test.ts')
+
+      # Build artifacts in build/ are committed because consumers install
+      # this package via git ref (see .gitignore for context). Fail the
+      # build if the committed output is out of date with src/, so a stale
+      # build/ can never silently ship.
+      - name: Verify committed build/ matches src/
+        if: matrix.node-version == 22
+        run: |
+          if ! git diff --quiet -- build; then
+            echo "::error::build/ is out of date with src/. Run 'npm run build' and commit the result."
+            git status --short -- build
+            git diff --stat -- build
+            exit 1
+          fi

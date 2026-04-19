@@ -1,2 +1,11 @@
 node_modules/
-build/
+# build/ is intentionally tracked: this package is consumed via git ref
+# (e.g. `npm i github:escalated-dev/escalated-plugin-sdk#vX.Y.Z` from
+# escalated-adonis) until it is published to npm. npm 11's git-prepare
+# script has a known bug that passes mutually exclusive --prefer-offline
+# and --prefer-online flags to the child install, breaking prepare-driven
+# on-install builds. Committing pre-built artifacts is the reliable
+# production path until publish lands.
+#
+# Any change to src/ MUST be accompanied by a re-run of `npm run build`
+# and a fresh commit of build/. CI enforces freshness in run-tests.yml.
