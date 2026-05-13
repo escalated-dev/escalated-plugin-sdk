@@ -1,0 +1,6 @@
+export type ManifestForPublish = {
+  slug: string;
+  version: string;
+  name?: string;
+  description?: string;
+} & Record<string, unknown>;
