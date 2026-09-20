@@ -41,7 +41,7 @@ async function main(): Promise<void> {
   let privateKeyPath: string | undefined;
   const positional: string[] = [];
 
-  for (let i = 1; i < argv.length; ) {
+  for (let i = 1; i < argv.length;) {
     const token = argv[i]!;
     if (!token.startsWith('--')) {
       positional.push(token);
