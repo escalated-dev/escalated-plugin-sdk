@@ -1,6 +1,7 @@
 # @escalated-dev/plugin-sdk
 
 [![Tests](https://github.com/escalated-dev/escalated-plugin-sdk/actions/workflows/run-tests.yml/badge.svg)](https://github.com/escalated-dev/escalated-plugin-sdk/actions/workflows/run-tests.yml)
+[![npm downloads](https://img.shields.io/npm/dm/@escalated-dev/plugin-sdk)](https://www.npmjs.com/package/@escalated-dev/plugin-sdk)
 [![Node.js](https://img.shields.io/badge/node.js-20+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
