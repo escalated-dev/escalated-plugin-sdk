@@ -5,6 +5,7 @@
 [![Node.js](https://img.shields.io/badge/node.js-20+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Views](https://hits.sh/github.com/escalated-dev/escalated-plugin-sdk.svg?style=flat&label=views&color=007ec6)](https://hits.sh/github.com/escalated-dev/escalated-plugin-sdk/)
 
 SDK for building [Escalated](https://escalated.dev) plugins. Write plugins once in TypeScript, run them across all Escalated backend frameworks (Laravel, Django, AdonisJS, Rails).
 
