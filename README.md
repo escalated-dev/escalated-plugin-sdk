@@ -200,4 +200,4 @@ See the [Escalated Docs](https://github.com/escalated-dev/escalated-docs) for th
 
 ## License
 
-MIT
+MIT - Copyright (c) Escalated.dev. See [LICENSE](LICENSE).
