@@ -51,6 +51,20 @@ export interface EndpointRequest {
     params: Record<string, string>;
     query: Record<string, string>;
     headers: Record<string, string>;
+    /** Present only when the host supplies the version 1 HTTP contract. */
+    httpContract?: 1;
+    /** Exact request bytes. Never reconstruct signed input from body. */
+    rawBody?: Uint8Array;
+    /** Host-resolved client address, subject to the host's trusted proxy policy. */
+    clientIp?: string;
+}
+/** Explicit response envelope; ordinary handler objects remain JSON data. */
+export interface PluginHttpResponse {
+    __escalated_http: 1;
+    status: number;
+    headers: Record<string, string>;
+    format: 'json' | 'text';
+    body: unknown;
 }
 export type EndpointDefinition = ((ctx: PluginContext, req: EndpointRequest) => Promise<unknown>) | EndpointHandler;
 export type WebhookHandler = (ctx: PluginContext, req: EndpointRequest) => Promise<unknown>;
