@@ -1,6 +1,6 @@
 {
   "name": "@escalated-dev/plugin-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "SDK for building Escalated plugins — framework-agnostic, TypeScript-first",
   "type": "module",
   "bin": {
