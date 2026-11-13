@@ -1,17 +1,24 @@
-# @escalated-dev/plugin-sdk
+<p align="center">
+  <a href="https://escalated.dev"><img src="https://raw.githubusercontent.com/escalated-dev/escalated/main/docs/assets/readme/logo.png" width="72" height="72" alt="Escalated"></a>
+</p>
 
-[![Tests](https://github.com/escalated-dev/escalated-plugin-sdk/actions/workflows/run-tests.yml/badge.svg)](https://github.com/escalated-dev/escalated-plugin-sdk/actions/workflows/run-tests.yml)
-[![npm downloads](https://img.shields.io/npm/dm/@escalated-dev/plugin-sdk)](https://www.npmjs.com/package/@escalated-dev/plugin-sdk)
-[![Node.js](https://img.shields.io/badge/node.js-20+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/typescript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Views](https://hits.sh/github.com/escalated-dev/escalated-plugin-sdk.svg?style=flat&label=views&color=007ec6)](https://hits.sh/github.com/escalated-dev/escalated-plugin-sdk/)
+<h1 align="center">Escalated Plugin SDK</h1>
 
-SDK for building [Escalated](https://escalated.dev) plugins. Write plugins once in TypeScript, run them across all Escalated backend frameworks (Laravel, Django, AdonisJS, Rails).
+<p align="center">
+  Write Escalated plugins once in TypeScript.<br>
+  The same plugin runs on every Escalated backend through the plugin runtime.
+</p>
 
-## Quick Start
+<p align="center">
+  <a href="https://escalated.dev"><b>Website</b></a> ·
+  <a href="https://escalated.dev/docs"><b>Docs</b></a> ·
+  <a href="https://escalated.dev/cloud"><b>Cloud</b></a> ·
+  <a href="https://github.com/escalated-dev/escalated-plugin-sdk/releases"><b>Releases</b></a>
+</p>
 
-```typescript
+<br>
+
+```ts
 import { definePlugin } from '@escalated-dev/plugin-sdk'
 
 export default definePlugin({
@@ -26,178 +33,103 @@ export default definePlugin({
 })
 ```
 
-## Installation
+## What it does
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>Hook into the helpdesk</h3>
+      React to ticket events, change values as they pass through filters, and add your own endpoints, webhooks and scheduled tasks.
+    </td>
+    <td width="50%" valign="top">
+      <h3>Extend the UI without forking it</h3>
+      Add admin pages with menu items, put panels into existing pages, and show dashboard widgets with live badges.
+    </td>
+  </tr>
+</table>
+
+## Features
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+**Hooks**
+- Action hooks, fire-and-forget
+- Filter hooks with priorities
+- Emit custom hooks for other plugins
+
+</td>
+<td width="33%" valign="top">
+
+**HTTP**
+- REST endpoints with capability checks
+- Incoming webhooks
+- Raw request bytes for signature checks
+- Real HTTP statuses with `httpResponse`
+
+</td>
+<td width="33%" valign="top">
+
+**Schedule and lifecycle**
+- Cron tasks keyed by expression
+- Activate and deactivate hooks
+- Settings fields in the admin UI
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+
+**Helpdesk data**
+- Tickets, replies and contacts
+- Tags, departments and agents
+- The current user
+
+</td>
+<td width="33%" valign="top">
+
+**Plugin services**
+- Plugin-scoped key-value and query store
+- Config values, outbound HTTP, logging
+- Broadcast to channels, users or tickets
+
+</td>
+<td width="33%" valign="top">
+
+**UI and real-time**
+- Full-page routes with menu items
+- Components injected into page slots
+- Dashboard widgets with badges
+- React to broadcast ticket events
+
+</td>
+</tr>
+</table>
+
+<p align="center"><sub><a href="docs/core-api.md">Every feature in detail</a></sub></p>
+
+<p align="center">
+  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript_5.4+-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript 5.4+"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"></a>
+  <a href="https://www.jsonrpc.org/specification"><img src="https://img.shields.io/badge/JSON--RPC_2.0-555555?style=for-the-badge" alt="JSON-RPC 2.0"></a>
+</p>
+
+## Quick start
 
 ```bash
 npm install @escalated-dev/plugin-sdk
 ```
 
-## Core API
+Define your plugin with `definePlugin` as above. The [getting started guide](docs/getting-started.md) lists the requirements.
 
-### `definePlugin(definition)`
+## Learn more
 
-The single entry point for defining a plugin. Returns a `ResolvedPlugin` with normalized filters and endpoints and a `toManifest()` method used by the Escalated host to register your plugin.
-
-```typescript
-import { definePlugin, type PluginContext } from '@escalated-dev/plugin-sdk'
-
-export default definePlugin({
-  name: 'my-plugin',
-  version: '1.0.0',
-  description: 'Does something useful',
-
-  // Config fields shown in the admin settings UI
-  config: [
-    { name: 'api_key', label: 'API Key', type: 'password', required: true },
-    { name: 'notify_channel', label: 'Notify Channel', type: 'text' },
-  ],
-
-  // Action hooks — fire-and-forget
-  actions: {
-    'ticket.created': async (event, ctx) => { /* ... */ },
-    'ticket.resolved': async (event, ctx) => { /* ... */ },
-  },
-
-  // Filter hooks — must return the (possibly modified) value
-  filters: {
-    'ticket.reply.compose': async (data, ctx) => {
-      return { ...data, extra_field: 'value' }
-    },
-    // Shorthand with explicit priority
-    'ticket.statuses': {
-      priority: 5,
-      handler: async (statuses, ctx) => [...statuses, { key: 'custom', name: 'Custom' }],
-    },
-  },
-
-  // REST endpoints exposed by the plugin
-  endpoints: {
-    'GET /my-plugin/status': async (ctx, req) => ({ ok: true }),
-    'POST /my-plugin/action': {
-      capability: 'manage_settings',
-      handler: async (ctx, req) => { /* ... */ },
-    },
-  },
-
-  // Incoming webhooks
-  webhooks: {
-    'POST /webhooks/my-service': async (ctx, req) => { /* ... */ },
-  },
-
-  // Scheduled tasks (cron expression as key)
-  cron: {
-    '0 9 * * 1': async (ctx) => {
-      ctx.log.info('Running weekly report')
-    },
-  },
-
-  // Lifecycle
-  onActivate: async (ctx) => { await ctx.store.set('data', 'init', { activated: true }) },
-  onDeactivate: async (ctx) => { /* cleanup */ },
-})
-```
-
-## Plugin Context (`ctx`)
-
-Every handler receives a `PluginContext` with the following services:
-
-| Property | Type | Description |
-|---|---|---|
-| `ctx.config` | `ConfigStore` | Read/write plugin configuration values |
-| `ctx.store` | `DataStore` | Persistent key-value and query store scoped to the plugin |
-| `ctx.http` | `HttpClient` | Make outbound HTTP requests |
-| `ctx.broadcast` | `BroadcastClient` | Push real-time events to channels, users, or tickets |
-| `ctx.log` | `Logger` | Structured logging (info, warn, error, debug) |
-| `ctx.tickets` | `TicketRepository` | Find, query, create, and update tickets |
-| `ctx.replies` | `ReplyRepository` | Find, query, and create replies |
-| `ctx.contacts` | `ContactRepository` | Find contacts by ID or email, create contacts |
-| `ctx.tags` | `TagRepository` | List and create tags |
-| `ctx.departments` | `DepartmentRepository` | List and find departments |
-| `ctx.agents` | `AgentRepository` | List and find agents |
-| `ctx.emit` | `function` | Emit a custom hook for other plugins to listen to |
-| `ctx.currentUser` | `function` | Returns the currently authenticated user, or null |
-
-## UI Extensions
-
-```typescript
-definePlugin({
-  // ...
-
-  // Full-page routes
-  pages: [
-    {
-      route: '/admin/my-plugin',
-      component: 'MySettingsPage',
-      layout: 'admin',
-      capability: 'manage_settings',
-      menu: { label: 'My Plugin', section: 'admin', position: 50 },
-    },
-  ],
-
-  // Inject components into existing pages
-  components: [
-    {
-      page: 'ticket.show',
-      slot: 'sidebar',
-      component: 'MyTicketPanel',
-      order: 20,
-    },
-  ],
-
-  // Dashboard widgets
-  widgets: [
-    {
-      component: 'MyWidget',
-      label: 'My Stats',
-      size: 'half',
-      badge: async (ctx) => {
-        const count = await ctx.store.query('alerts', { unread: true })
-        return count.length || null
-      },
-    },
-  ],
-})
-```
-
-## Broadcastable Events
-
-Plugins can listen to real-time broadcasting events in addition to standard action hooks. When the host framework has broadcasting enabled (Pusher, Reverb, ActionCable, Django Channels, Mercure, Phoenix PubSub, SSE, etc.), the following events are forwarded to plugins:
-
-| Event | Description |
-|---|---|
-| `broadcast.ticket.updated` | Ticket data changed and was broadcast to connected clients |
-| `broadcast.ticket.replied` | A new reply was broadcast on a ticket channel |
-| `broadcast.ticket.assigned` | Agent assignment was broadcast |
-| `broadcast.ticket.status_changed` | Status transition was broadcast |
-| `broadcast.presence.updated` | Ticket presence (who is viewing) was broadcast |
-| `broadcast.notification.sent` | A real-time notification was pushed to a user |
-
-Subscribe to these in your plugin's `actions` block just like any other hook:
-
-```typescript
-actions: {
-  'broadcast.ticket.replied': async (event, ctx) => {
-    // React to a reply that was just broadcast in real time
-    ctx.log.info('Broadcast reply on ticket', event.ticketId)
-  },
-},
-```
-
-## Documentation
-
-See the [Escalated Docs](https://github.com/escalated-dev/escalated-docs) for the full plugin development guide.
-
-## Related Packages
-
-- **[Plugin Runtime](https://github.com/escalated-dev/escalated-plugin-runtime)** — Runtime host that loads and executes plugins
-- **[Escalated](https://github.com/escalated-dev/escalated)** — Shared frontend (Vue 3 + Inertia.js)
-- **[Escalated Docs](https://github.com/escalated-dev/escalated-docs)** — Full documentation
-
-## Requirements
-
-- Node.js >= 18
-- TypeScript >= 5.4
+- [Getting started](docs/getting-started.md) · [Core API, plugin context, UI extensions and events](docs/core-api.md)
+- [Plugin HTTP contract](docs/http-contract.md)
+- [Plugin runtime](https://github.com/escalated-dev/escalated-plugin-runtime), which loads and runs your plugins
+- [Escalated docs](https://escalated.dev/docs) · [Docs source](https://github.com/escalated-dev/escalated-docs) · [Shared frontend](https://github.com/escalated-dev/escalated)
 
 ## License
 
-MIT - Copyright (c) Escalated.dev. See [LICENSE](LICENSE).
+MIT. Copyright (c) Escalated.dev. See [LICENSE](LICENSE).
